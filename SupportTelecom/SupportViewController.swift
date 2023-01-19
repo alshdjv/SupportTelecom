@@ -19,16 +19,17 @@ final class SupportViewController: UIViewController {
         return label
     }()
     
+    /// MARK: - First Stack View
     private let leftView: UIView = {
         let view = UIView()
-        view.backgroundColor = .blue
+        view.backgroundColor = .white
         view.layer.cornerRadius = 20
         return view
     }()
     
     private let rightView: UIView = {
         let view = UIView()
-        view.backgroundColor = .red
+        view.backgroundColor = .white
         view.layer.cornerRadius = 20
         return view
     }()
@@ -36,16 +37,36 @@ final class SupportViewController: UIViewController {
     private let viewStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
-        stackView.distribution = .equalSpacing
-        stackView.alignment = .center
-        stackView.backgroundColor = .yellow
+        stackView.distribution = .fillEqually
+        stackView.spacing = 24
         return stackView
     }()
-
+    
+    /// MARK: - SubStackViews of First StackView - Left View
+    private let chatLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Чат с оператором"
+        label.font = .systemFont(ofSize: 17, weight: .semibold)
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    private let chatImage: UIImageView = {
+        let image = UIImage(named: "chat_bubble")
+        let imageView = UIImageView(image: image?.withRenderingMode(.alwaysOriginal))
+        imageView.layer.masksToBounds = true
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+    
+    private let firstBlockButton: UIButton = {
+        let button = UIButton()
+        return button
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.view.backgroundColor = .secondarySystemBackground
         self.setupUI()
     }
     
@@ -55,10 +76,14 @@ final class SupportViewController: UIViewController {
     }
     
     private func addedSubviews() {
-        view.addSubview(supportLabel)
-        view.addSubview(viewStackView)
-        viewStackView.addArrangedSubview(leftView)
-        viewStackView.addArrangedSubview(rightView)
+        self.view.addSubview(supportLabel)
+        self.view.addSubview(viewStackView)
+        self.viewStackView.addArrangedSubview(leftView)
+        self.viewStackView.addArrangedSubview(rightView)
+        
+        self.leftView.addSubview(firstBlockButton)
+        self.firstBlockButton.addSubview(chatLabel)
+        self.firstBlockButton.addSubview(chatImage)
     }
     
     private func setConstraints() {
@@ -68,6 +93,7 @@ final class SupportViewController: UIViewController {
             make.height.equalTo(40)
         }
         
+        // First StackView what holds two views
         viewStackView.snp.makeConstraints { make in
             make.top.equalTo(self.supportLabel.snp.bottom).offset(24)
             make.leading.trailing.equalToSuperview().inset(16)
@@ -77,16 +103,38 @@ final class SupportViewController: UIViewController {
         leftView.snp.makeConstraints { make in
             make.top.equalTo(self.viewStackView.snp.top)
             make.leading.equalTo(self.viewStackView.snp.leading)
-            make.size.equalTo(CGSize(width: 160, height: 160))
+            make.bottom.equalTo(self.viewStackView.snp.bottom)
+            make.height.equalTo(160)
         }
         
         rightView.snp.makeConstraints { make in
             make.top.equalTo(self.viewStackView.snp.top)
             make.trailing.equalTo(self.viewStackView.snp.trailing)
-            make.size.equalTo(CGSize(width: 160, height: 160))
+            make.bottom.equalTo(self.viewStackView.snp.bottom)
+            make.height.equalTo(160)
+        }
+        
+        // Left View
+        firstBlockButton.snp.makeConstraints { make in
+            make.top.equalTo(self.leftView.snp.top)
+            make.leading.equalTo(self.leftView.snp.leading)
+            make.trailing.equalTo(self.leftView.snp.trailing)
+            make.bottom.equalTo(self.leftView.snp.bottom)
+            make.width.equalTo(self.leftView.snp.width)
+        }
+        
+        chatLabel.snp.makeConstraints { make in
+            make.top.equalTo(self.firstBlockButton.snp.top).offset(16)
+            make.leading.equalTo(self.firstBlockButton.snp.leading).offset(20)
+            make.trailing.equalTo(self.firstBlockButton.snp.trailing).offset(-20)
+            make.height.equalTo(41)
+        }
+        
+        chatImage.snp.makeConstraints { make in
+            make.top.equalTo(self.chatLabel.snp.bottom).offset(12)
+            make.trailing.equalTo(self.firstBlockButton.snp.trailing).offset(-16)
+            make.size.equalTo(CGSize(width: 72, height: 72))
         }
     }
-
-
 }
 
