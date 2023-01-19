@@ -11,10 +11,80 @@ struct Colors {
 }
 
 final class SupportViewController: UIViewController {
+    
+    private let supportLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Поддержка"
+        label.font = .systemFont(ofSize: 32, weight: .semibold)
+        return label
+    }()
+    
+    private let leftView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .blue
+        view.layer.cornerRadius = 20
+        return view
+    }()
+    
+    private let rightView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .red
+        view.layer.cornerRadius = 20
+        return view
+    }()
+    
+    private let viewStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .equalSpacing
+        stackView.alignment = .center
+        stackView.backgroundColor = .yellow
+        return stackView
+    }()
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        self.setupUI()
+    }
+    
+    private func setupUI() {
+        self.addedSubviews()
+        self.setConstraints()
+    }
+    
+    private func addedSubviews() {
+        view.addSubview(supportLabel)
+        view.addSubview(viewStackView)
+        viewStackView.addArrangedSubview(leftView)
+        viewStackView.addArrangedSubview(rightView)
+    }
+    
+    private func setConstraints() {
+        supportLabel.snp.makeConstraints { make in
+            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(24)
+            make.leading.equalToSuperview().offset(16)
+            make.height.equalTo(40)
+        }
+        
+        viewStackView.snp.makeConstraints { make in
+            make.top.equalTo(self.supportLabel.snp.bottom).offset(24)
+            make.leading.trailing.equalToSuperview().inset(16)
+            make.centerX.equalTo(self.view.snp.centerX)
+        }
+        
+        leftView.snp.makeConstraints { make in
+            make.top.equalTo(self.viewStackView.snp.top)
+            make.leading.equalTo(self.viewStackView.snp.leading)
+            make.size.equalTo(CGSize(width: 160, height: 160))
+        }
+        
+        rightView.snp.makeConstraints { make in
+            make.top.equalTo(self.viewStackView.snp.top)
+            make.trailing.equalTo(self.viewStackView.snp.trailing)
+            make.size.equalTo(CGSize(width: 160, height: 160))
+        }
     }
 
 
