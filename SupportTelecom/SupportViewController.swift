@@ -57,7 +57,7 @@ final class SupportViewController: UIViewController {
         let image = UIImage(named: "chat_bubble")
         let imageView = UIImageView(image: image?.withRenderingMode(.alwaysOriginal))
         imageView.layer.masksToBounds = true
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
@@ -91,7 +91,7 @@ final class SupportViewController: UIViewController {
         let image = UIImage(named: "speed_img")
         let imageView = UIImageView(image: image?.withRenderingMode(.alwaysOriginal))
         imageView.layer.masksToBounds = true
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
