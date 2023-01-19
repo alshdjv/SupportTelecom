@@ -10,6 +10,8 @@ struct Colors {
     static let secondaryDark = UIColor(red: 128/255, green: 129/255, blue: 133/255, alpha: 1.0)
 }
 
+// MARK: - Support View Controller
+
 final class SupportViewController: UIViewController {
     
     private let supportLabel: UILabel = {
@@ -22,14 +24,14 @@ final class SupportViewController: UIViewController {
     /// MARK: - First Stack View
     private let leftView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         view.layer.cornerRadius = 20
         return view
     }()
     
     private let rightView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         view.layer.cornerRadius = 20
         return view
     }()
@@ -55,20 +57,64 @@ final class SupportViewController: UIViewController {
         let image = UIImage(named: "chat_bubble")
         let imageView = UIImageView(image: image?.withRenderingMode(.alwaysOriginal))
         imageView.layer.masksToBounds = true
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         return imageView
+    }()
+    
+    private let dotView: UIView = {
+        let view = UIView()
+        view.backgroundColor = Colors.redLight
+        view.layer.cornerRadius = 12
+        return view
     }()
     
     private let firstBlockButton: UIButton = {
         let button = UIButton()
+        button.addTarget(button, action: #selector(actionLeftBtn), for: .touchUpInside)
         return button
     }()
+    
+    @objc func actionLeftBtn() {
+        
+    }
+    
+    /// MARK: - SubStackViews of First StackView - Right View
+    private let speedLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Проверить скорость"
+        label.font = .systemFont(ofSize: 17, weight: .semibold)
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    private let speedImage: UIImageView = {
+        let image = UIImage(named: "speed_img")
+        let imageView = UIImageView(image: image?.withRenderingMode(.alwaysOriginal))
+        imageView.layer.masksToBounds = true
+        imageView.contentMode = .scaleAspectFill
+        return imageView
+    }()
+    
+    private let secondBlockButton: UIButton = {
+        let button = UIButton()
+        button.addTarget(button, action: #selector(actionRightBtn), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc func actionRightBtn() {
+        
+    }
 
+    // MARK: - Init viewDidLoad()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .secondarySystemBackground
+        
         self.setupUI()
     }
+    
+    // MARK: - Setup Layer & UI
     
     private func setupUI() {
         self.addedSubviews()
@@ -84,6 +130,10 @@ final class SupportViewController: UIViewController {
         self.leftView.addSubview(firstBlockButton)
         self.firstBlockButton.addSubview(chatLabel)
         self.firstBlockButton.addSubview(chatImage)
+        
+        self.rightView.addSubview(secondBlockButton)
+        self.secondBlockButton.addSubview(speedLabel)
+        self.secondBlockButton.addSubview(speedImage)
     }
     
     private func setConstraints() {
@@ -135,6 +185,30 @@ final class SupportViewController: UIViewController {
             make.trailing.equalTo(self.firstBlockButton.snp.trailing).offset(-16)
             make.size.equalTo(CGSize(width: 72, height: 72))
         }
+        
+        // Right View
+        secondBlockButton.snp.makeConstraints { make in
+            make.top.equalTo(self.rightView.snp.top)
+            make.leading.equalTo(self.rightView.snp.leading)
+            make.trailing.equalTo(self.rightView.snp.trailing)
+            make.bottom.equalTo(self.rightView.snp.bottom)
+            make.width.equalTo(self.rightView.snp.width)
+        }
+        
+        speedLabel.snp.makeConstraints { make in
+            make.top.equalTo(self.secondBlockButton.snp.top).offset(16)
+            make.leading.equalTo(self.secondBlockButton.snp.leading).offset(20)
+            make.trailing.equalTo(self.secondBlockButton.snp.trailing).offset(-20)
+            make.height.equalTo(41)
+        }
+        
+        speedImage.snp.makeConstraints { make in
+            make.top.equalTo(self.chatLabel.snp.bottom).offset(16)
+            make.leading.equalTo(self.secondBlockButton.snp.leading)
+            make.trailing.equalTo(self.secondBlockButton.snp.trailing)
+            make.height.equalTo(72)
+        }
+        
     }
 }
 
