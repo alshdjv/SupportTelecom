@@ -107,7 +107,8 @@ final class SupportViewController: UIViewController {
         
     }
     
-    /// MARK: - Middle content part
+    // MARK: - Middle content part
+    
     private var callCentreView: UIView = {
         let view = UIView()
         view.backgroundColor = .systemBackground
@@ -124,6 +125,46 @@ final class SupportViewController: UIViewController {
     
     private let operatorImage: UIImageView = {
         let image = UIImage(named: "call_centre")
+        let imageView = UIImageView(image: image?.withRenderingMode(.alwaysOriginal))
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.masksToBounds = true
+        return imageView
+    }()
+    
+    // MARK: - Footer content part
+    
+    private let requestView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemBackground
+        view.layer.cornerRadius = 20
+        return view
+    }()
+    
+    private let requestLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Мои заявки"
+        label.font = .systemFont(ofSize: 20, weight: .semibold)
+        return label
+    }()
+    
+    private let sendShowLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Отправить или просмотреть заявку"
+        label.font = .systemFont(ofSize: 13, weight: .regular)
+        label.textColor = Colors.secondaryLight
+        return label
+    }()
+    
+    private let requestStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        stackView.spacing = 4
+        return stackView
+    }()
+    
+    private let toolImage: UIImageView = {
+        let image = UIImage(named: "tool_img")
         let imageView = UIImageView(image: image?.withRenderingMode(.alwaysOriginal))
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
@@ -163,6 +204,12 @@ final class SupportViewController: UIViewController {
         self.view.addSubview(callCentreView)
         self.callCentreView.addSubview(tarifNameLabel)
         self.callCentreView.addSubview(operatorImage)
+        
+        self.view.addSubview(requestView)
+        self.requestView.addSubview(requestStackView)
+        self.requestStackView.addArrangedSubview(requestLabel)
+        self.requestStackView.addArrangedSubview(sendShowLabel)
+        self.requestView.addSubview(toolImage)
     }
     
     private func setConstraints() {
@@ -259,6 +306,36 @@ final class SupportViewController: UIViewController {
             make.trailing.equalTo(self.callCentreView.snp.trailing).offset(-20)
             make.size.equalTo(CGSize(width: 32, height: 32))
         }
+        
+        
+        // FOOTER PART: - Request View
+        requestView.snp.makeConstraints { make in
+            make.top.equalTo(self.callCentreView.snp.bottom).offset(24)
+            make.leading.equalTo(self.callCentreView.snp.leading)
+            make.trailing.equalTo(self.callCentreView.snp.trailing)
+            make.height.equalTo(76)
+        }
+        
+        requestStackView.snp.makeConstraints { make in
+            make.top.equalTo(self.requestView.snp.top).offset(16)
+            make.leading.equalTo(self.requestView.snp.leading).offset(20)
+            make.bottom.equalTo(self.requestView.snp.bottom).offset(-16)
+            make.height.equalTo(44)
+        }
+        
+        toolImage.snp.makeConstraints { make in
+            make.top.equalTo(self.requestView.snp.top).offset(16)
+            make.leading.equalTo(self.requestStackView.snp.trailing).offset(43)
+            make.trailing.equalTo(self.requestView.snp.trailing).offset(-20)
+            make.size.equalTo(CGSize(width: 32, height: 32))
+        }
     }
 }
 
+final class NavigationController: UIViewController {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        title = "Hello"
+    }
+}
