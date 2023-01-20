@@ -47,6 +47,7 @@ final class SupportViewController: UIViewController {
     private let horizontalStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
+        stackView.alignment = .center
         stackView.distribution = .equalSpacing
         return stackView
     }()
@@ -83,7 +84,7 @@ final class SupportViewController: UIViewController {
     
     private let labelInsideDotView: UILabel = {
         let label = UILabel()
-        label.textColor = .systemBackground
+        label.textColor = .white
         label.font = .systemFont(ofSize: 15, weight: .semibold)
         return label
     }()
@@ -213,7 +214,7 @@ final class SupportViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .secondarySystemBackground
-        configure(number: 0)
+        configure(number: 10)
         self.setupUI()
     }
     
@@ -228,30 +229,30 @@ final class SupportViewController: UIViewController {
         self.view.addSubview(supportLabel)
         self.view.addSubview(mainStackView)
         
-        self.mainStackView.addArrangedSubview(horizontalStackView)
         self.horizontalStackView.addArrangedSubview(leftView)
         self.horizontalStackView.addArrangedSubview(rightView)
+        self.mainStackView.addArrangedSubview(horizontalStackView)
         
-        self.leftView.addSubview(firstBlockButton)
-        self.firstBlockButton.addSubview(dotView)
+        self.leftView.addSubview(dotView)
         self.dotView.addSubview(labelInsideDotView)
-        self.firstBlockButton.addSubview(chatLabel)
-        self.firstBlockButton.addSubview(chatImage)
+        self.leftView.addSubview(chatLabel)
+        self.leftView.addSubview(chatImage)
+        self.leftView.addSubview(firstBlockButton)
         
+        self.rightView.addSubview(speedLabel)
+        self.rightView.addSubview(speedImage)
         self.rightView.addSubview(secondBlockButton)
-        self.secondBlockButton.addSubview(speedLabel)
-        self.secondBlockButton.addSubview(speedImage)
         
-        self.mainStackView.addArrangedSubview(callCentreView)
+        self.callCentreView.addSubview(tarifNameLabel)
+        self.callCentreView.addSubview(operatorImage)
         self.callCentreView.addSubview(callCentreButton)
-        self.callCentreButton.addSubview(tarifNameLabel)
-        self.callCentreButton.addSubview(operatorImage)
+        self.mainStackView.addArrangedSubview(callCentreView)
 
-        self.mainStackView.addArrangedSubview(requestView)
+        self.requestView.addSubview(requestLabel)
+        self.requestView.addSubview(sendShowLabel)
+        self.requestView.addSubview(toolImage)
         self.requestView.addSubview(requestButton)
-        self.requestButton.addSubview(requestLabel)
-        self.requestButton.addSubview(sendShowLabel)
-        self.requestButton.addSubview(toolImage)
+        self.mainStackView.addArrangedSubview(requestView)
     }
     
     private func setConstraints() {
@@ -266,34 +267,19 @@ final class SupportViewController: UIViewController {
             make.leading.trailing.equalToSuperview().inset(16)
         }
         
-        // HEADER PART - First StackView what holds two views
+        // HEADER PART - Horizontal StackView what holds two views
         horizontalStackView.snp.makeConstraints { make in
             make.top.equalTo(self.mainStackView.snp.top)
             make.leading.equalTo(self.mainStackView.snp.leading)
             make.trailing.equalTo(self.mainStackView.snp.trailing)
         }
         
+        // Left View
         leftView.snp.makeConstraints { make in
             make.top.equalTo(self.horizontalStackView.snp.top)
             make.leading.equalTo(self.horizontalStackView.snp.leading)
             make.bottom.equalTo(self.horizontalStackView.snp.bottom)
             make.size.equalTo(CGSize(width: 160, height: 160))
-        }
-        
-        rightView.snp.makeConstraints { make in
-            make.top.equalTo(self.horizontalStackView.snp.top)
-            make.trailing.equalTo(self.horizontalStackView.snp.trailing)
-            make.bottom.equalTo(self.horizontalStackView.snp.bottom)
-            make.size.equalTo(CGSize(width: 160, height: 160))
-        }
-        
-        // Left View
-        firstBlockButton.snp.makeConstraints { make in
-            make.top.equalTo(self.leftView.snp.top)
-            make.leading.equalTo(self.leftView.snp.leading)
-            make.trailing.equalTo(self.leftView.snp.trailing)
-            make.bottom.equalTo(self.leftView.snp.bottom)
-            make.width.equalTo(self.leftView.snp.width)
         }
         
         // --------------------------
@@ -310,39 +296,54 @@ final class SupportViewController: UIViewController {
         
         
         chatLabel.snp.makeConstraints { make in
-            make.top.equalTo(self.firstBlockButton.snp.top).offset(16)
-            make.leading.equalTo(self.firstBlockButton.snp.leading).offset(20)
-            make.trailing.equalTo(self.firstBlockButton.snp.trailing).offset(-20)
+            make.top.equalTo(self.leftView.snp.top).offset(16)
+            make.leading.equalTo(self.leftView.snp.leading).offset(20)
+            make.trailing.equalTo(self.leftView.snp.trailing).offset(-20)
             make.height.equalTo(41)
         }
         
         chatImage.snp.makeConstraints { make in
             make.top.equalTo(self.chatLabel.snp.bottom).offset(12)
-            make.trailing.equalTo(self.firstBlockButton.snp.trailing).offset(-16)
+            make.trailing.equalTo(self.leftView.snp.trailing).offset(-16)
             make.size.equalTo(CGSize(width: 72, height: 72))
         }
         
+        firstBlockButton.snp.makeConstraints { make in
+            make.top.equalTo(self.leftView.snp.top)
+            make.leading.equalTo(self.leftView.snp.leading)
+            make.trailing.equalTo(self.leftView.snp.trailing)
+            make.bottom.equalTo(self.leftView.snp.bottom)
+            make.width.equalTo(self.leftView.snp.width)
+        }
+        
         // Right View
+        rightView.snp.makeConstraints { make in
+            make.top.equalTo(self.horizontalStackView.snp.top)
+            make.trailing.equalTo(self.horizontalStackView.snp.trailing)
+            make.bottom.equalTo(self.horizontalStackView.snp.bottom)
+            make.size.equalTo(CGSize(width: 160, height: 160))
+        }
+        
+        speedLabel.snp.makeConstraints { make in
+            make.top.equalTo(self.rightView.snp.top).offset(16)
+            make.leading.equalTo(self.rightView.snp.leading).offset(20)
+            make.trailing.equalTo(self.rightView.snp.trailing).offset(-20)
+            make.height.equalTo(41)
+        }
+        
+        speedImage.snp.makeConstraints { make in
+            make.top.equalTo(self.chatLabel.snp.bottom).offset(16)
+            make.leading.equalTo(self.rightView.snp.leading)
+            make.trailing.equalTo(self.rightView.snp.trailing)
+            make.height.equalTo(72)
+        }
+        
         secondBlockButton.snp.makeConstraints { make in
             make.top.equalTo(self.rightView.snp.top)
             make.leading.equalTo(self.rightView.snp.leading)
             make.trailing.equalTo(self.rightView.snp.trailing)
             make.bottom.equalTo(self.rightView.snp.bottom)
             make.width.equalTo(self.rightView.snp.width)
-        }
-        
-        speedLabel.snp.makeConstraints { make in
-            make.top.equalTo(self.secondBlockButton.snp.top).offset(16)
-            make.leading.equalTo(self.secondBlockButton.snp.leading).offset(20)
-            make.trailing.equalTo(self.secondBlockButton.snp.trailing).offset(-20)
-            make.height.equalTo(41)
-        }
-        
-        speedImage.snp.makeConstraints { make in
-            make.top.equalTo(self.chatLabel.snp.bottom).offset(16)
-            make.leading.equalTo(self.secondBlockButton.snp.leading)
-            make.trailing.equalTo(self.secondBlockButton.snp.trailing)
-            make.height.equalTo(72)
         }
         
         
@@ -353,6 +354,19 @@ final class SupportViewController: UIViewController {
             make.height.equalTo(64)
         }
 
+        tarifNameLabel.snp.makeConstraints { make in
+            make.top.equalTo(self.callCentreView.snp.top).offset(16)
+            make.leading.equalTo(self.callCentreView.snp.leading).offset(20)
+            make.bottom.equalTo(self.callCentreView.snp.bottom).offset(-24)
+            make.height.equalTo(24)
+        }
+
+        operatorImage.snp.makeConstraints { make in
+            make.top.equalTo(self.callCentreView.snp.top).offset(16)
+            make.trailing.equalTo(self.callCentreView.snp.trailing).offset(-20)
+            make.size.equalTo(CGSize(width: 32, height: 32))
+        }
+
         callCentreButton.snp.makeConstraints { make in
             make.top.equalTo(self.callCentreView.snp.top)
             make.leading.equalTo(self.callCentreView.snp.leading)
@@ -361,38 +375,17 @@ final class SupportViewController: UIViewController {
             make.width.equalTo(self.callCentreView.snp.width)
         }
 
-        tarifNameLabel.snp.makeConstraints { make in
-            make.top.equalTo(self.callCentreButton.snp.top).offset(16)
-            make.leading.equalTo(self.callCentreButton.snp.leading).offset(20)
-            make.bottom.equalTo(self.callCentreButton.snp.bottom).offset(-24)
-            make.height.equalTo(24)
-        }
-
-        operatorImage.snp.makeConstraints { make in
-            make.top.equalTo(self.callCentreButton.snp.top).offset(16)
-            make.trailing.equalTo(self.callCentreButton.snp.trailing).offset(-20)
-            make.size.equalTo(CGSize(width: 32, height: 32))
-        }
-
         
         // FOOTER PART: - Request View
         requestView.snp.makeConstraints { make in
-            make.leading.equalTo(self.callCentreView.snp.leading)
-            make.trailing.equalTo(self.callCentreView.snp.trailing)
+            make.leading.equalTo(self.mainStackView.snp.leading)
+            make.trailing.equalTo(self.mainStackView.snp.trailing)
             make.height.equalTo(76)
-        }
-
-        requestButton.snp.makeConstraints { make in
-            make.top.equalTo(self.requestView.snp.top)
-            make.leading.equalTo(self.requestView.snp.leading)
-            make.trailing.equalTo(self.requestView.snp.trailing)
-            make.bottom.equalTo(self.requestView.snp.bottom)
-            make.width.equalTo(self.requestView.snp.width)
         }
         
         requestLabel.snp.makeConstraints { make in
-            make.top.equalTo(self.requestButton.snp.top).offset(16)
-            make.leading.equalTo(self.requestButton.snp.leading).offset(20)
+            make.top.equalTo(self.requestView.snp.top).offset(16)
+            make.leading.equalTo(self.requestView.snp.leading).offset(20)
             make.height.equalTo(24)
         }
         
@@ -403,9 +396,17 @@ final class SupportViewController: UIViewController {
         }
 
         toolImage.snp.makeConstraints { make in
-            make.top.equalTo(self.requestButton.snp.top).offset(16)
-            make.trailing.equalTo(self.requestButton.snp.trailing).offset(-20)
+            make.top.equalTo(self.requestView.snp.top).offset(16)
+            make.trailing.equalTo(self.requestView.snp.trailing).offset(-20)
             make.size.equalTo(CGSize(width: 32, height: 32))
+        }
+        
+        requestButton.snp.makeConstraints { make in
+            make.top.equalTo(self.requestView.snp.top)
+            make.leading.equalTo(self.requestView.snp.leading)
+            make.trailing.equalTo(self.requestView.snp.trailing)
+            make.bottom.equalTo(self.requestView.snp.bottom)
+            make.width.equalTo(self.requestView.snp.width)
         }
     }
     
