@@ -70,14 +70,15 @@ final class SupportViewController: UIViewController {
         return view
     }()
     
-    private let firstBlockButton: UIButton = {
+    private lazy var firstBlockButton: UIButton = {
         let button = UIButton()
-        button.addTarget(button, action: #selector(actionLeftBtn), for: .touchUpInside)
+        button.addTarget(self, action: #selector(actionLeftBtn), for: .touchUpInside)
         return button
     }()
     
     @objc func actionLeftBtn() {
-        
+        let chatVC = ChatViewController()
+        self.navigationController?.pushViewController(chatVC, animated: true)
     }
     
     /// MARK: - SubStackViews of First StackView - Right View
@@ -97,14 +98,15 @@ final class SupportViewController: UIViewController {
         return imageView
     }()
     
-    private let secondBlockButton: UIButton = {
+    private lazy var secondBlockButton: UIButton = {
         let button = UIButton()
-        button.addTarget(button, action: #selector(actionRightBtn), for: .touchUpInside)
+        button.addTarget(self, action: #selector(actionRightBtn), for: .touchUpInside)
         return button
     }()
     
     @objc func actionRightBtn() {
-        
+        let checkSpeedVC = CheckSpeedViewController()
+        self.navigationController?.pushViewController(checkSpeedVC, animated: true)
     }
     
     // MARK: - Middle content part
@@ -332,10 +334,22 @@ final class SupportViewController: UIViewController {
     }
 }
 
-final class NavigationController: UIViewController {
+// MARK: - Test
+
+final class ChatViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Hello"
+        self.view.backgroundColor = .systemBackground
+        self.title = "Чат с оператором"
+    }
+}
+
+final class CheckSpeedViewController: UIViewController {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.view.backgroundColor = .systemBackground
+        self.title = "Проверить скорость"
     }
 }
