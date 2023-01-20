@@ -11,7 +11,6 @@ struct Colors {
 }
 
 // MARK: - Support View Controller
-
 final class SupportViewController: UIViewController {
     
     private let supportLabel: UILabel = {
@@ -22,8 +21,8 @@ final class SupportViewController: UIViewController {
     }()
     
     // MARK: - Header content part
-
-    /// MARK: - FirstStackView
+    
+    /// MARK: - Horizontal StackView
     private let leftView: UIView = {
         let view = UIView()
         view.backgroundColor = .systemBackground
@@ -38,15 +37,14 @@ final class SupportViewController: UIViewController {
         return view
     }()
     
-    private let viewStackView: UIStackView = {
+    private let horizontalStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
-        stackView.distribution = .fillEqually
-        stackView.spacing = 24
+        stackView.distribution = .equalSpacing
         return stackView
     }()
     
-    /// MARK: - SubStackViews of First StackView - Left View
+    /// MARK: - SubStackViews of Horizontal StackView - Left View
     private let chatLabel: UILabel = {
         let label = UILabel()
         label.text = "Чат с оператором"
@@ -81,7 +79,7 @@ final class SupportViewController: UIViewController {
         self.navigationController?.pushViewController(chatVC, animated: true)
     }
     
-    /// MARK: - SubStackViews of First StackView - Right View
+    /// MARK: - SubStackViews of Horizontal StackView - Right View
     private let speedLabel: UILabel = {
         let label = UILabel()
         label.text = "Проверить скорость"
@@ -213,9 +211,9 @@ final class SupportViewController: UIViewController {
     
     private func addedSubviews() {
         self.view.addSubview(supportLabel)
-        self.view.addSubview(viewStackView)
-        self.viewStackView.addArrangedSubview(leftView)
-        self.viewStackView.addArrangedSubview(rightView)
+        self.view.addSubview(horizontalStackView)
+        self.horizontalStackView.addArrangedSubview(leftView)
+        self.horizontalStackView.addArrangedSubview(rightView)
         
         self.leftView.addSubview(firstBlockButton)
         self.firstBlockButton.addSubview(chatLabel)
@@ -246,24 +244,24 @@ final class SupportViewController: UIViewController {
         }
         
         // HEADER PART - First StackView what holds two views
-        viewStackView.snp.makeConstraints { make in
+        horizontalStackView.snp.makeConstraints { make in
             make.top.equalTo(self.supportLabel.snp.bottom).offset(24)
             make.leading.trailing.equalToSuperview().inset(16)
             make.centerX.equalTo(self.view.snp.centerX)
         }
         
         leftView.snp.makeConstraints { make in
-            make.top.equalTo(self.viewStackView.snp.top)
-            make.leading.equalTo(self.viewStackView.snp.leading)
-            make.bottom.equalTo(self.viewStackView.snp.bottom)
-            make.height.equalTo(160)
+            make.top.equalTo(self.horizontalStackView.snp.top)
+            make.leading.equalTo(self.horizontalStackView.snp.leading)
+            make.bottom.equalTo(self.horizontalStackView.snp.bottom)
+            make.size.equalTo(CGSize(width: 160, height: 160))
         }
         
         rightView.snp.makeConstraints { make in
-            make.top.equalTo(self.viewStackView.snp.top)
-            make.trailing.equalTo(self.viewStackView.snp.trailing)
-            make.bottom.equalTo(self.viewStackView.snp.bottom)
-            make.height.equalTo(160)
+            make.top.equalTo(self.horizontalStackView.snp.top)
+            make.trailing.equalTo(self.horizontalStackView.snp.trailing)
+            make.bottom.equalTo(self.horizontalStackView.snp.bottom)
+            make.size.equalTo(CGSize(width: 160, height: 160))
         }
         
         // Left View
@@ -314,9 +312,9 @@ final class SupportViewController: UIViewController {
         
         // MIDDLE PART: - Call Centre View
         callCentreView.snp.makeConstraints { make in
-            make.top.equalTo(self.viewStackView.snp.bottom).offset(24)
-            make.leading.equalTo(self.viewStackView.snp.leading)
-            make.trailing.equalTo(self.viewStackView.snp.trailing)
+            make.top.equalTo(self.horizontalStackView.snp.bottom).offset(24)
+            make.leading.equalTo(self.horizontalStackView.snp.leading)
+            make.trailing.equalTo(self.horizontalStackView.snp.trailing)
             make.height.equalTo(64)
         }
         
@@ -375,7 +373,6 @@ final class SupportViewController: UIViewController {
 }
 
 // MARK: - Test
-
 final class ChatViewController: UIViewController {
     
     override func viewDidLoad() {
