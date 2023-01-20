@@ -68,21 +68,28 @@ final class SupportViewController: UIViewController {
         return imageView
     }()
     
+    // MARK: - DOTVIEW SETTING
+    
+    var labelCount: Int = 0
+    
     private let dotView: UIView = {
         let view = UIView()
         view.backgroundColor = Colors.redLight
         view.layer.cornerRadius = 12
+        view.isHidden = true
         view.clipsToBounds = true
         return view
     }()
     
-    private let labelInsideDotView: UIView = {
+    private let labelInsideDotView: UILabel = {
         let label = UILabel()
-        label.text = "4"
         label.textColor = .systemBackground
         label.font = .systemFont(ofSize: 15, weight: .semibold)
         return label
     }()
+    
+    // MARK: -------------------
+
     
     private lazy var firstBlockButton: UIButton = {
         let button = UIButton()
@@ -206,7 +213,7 @@ final class SupportViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .secondarySystemBackground
-        
+        configure(number: 0)
         self.setupUI()
     }
     
@@ -399,6 +406,26 @@ final class SupportViewController: UIViewController {
             make.top.equalTo(self.requestButton.snp.top).offset(16)
             make.trailing.equalTo(self.requestButton.snp.trailing).offset(-20)
             make.size.equalTo(CGSize(width: 32, height: 32))
+        }
+    }
+    
+    // MARK: - Functions
+    
+    public func configure(number: Int) {
+        labelCount = number
+        
+        for _ in 0..<labelCount {
+            let dot = dotView
+            let label = labelInsideDotView
+            if labelCount == 0 {
+                label.isHidden = true
+                dot.isHidden = true
+            } else {
+                label.isHidden = false
+                dot.isHidden = false
+            }
+            label.text = String(labelCount)
+            dot.addSubview(label)
         }
     }
 }
