@@ -133,6 +133,17 @@ final class SupportViewController: UIViewController {
         return imageView
     }()
     
+    private lazy var callCentreButton: UIButton = {
+        let button = UIButton()
+        button.addTarget(self, action: #selector(actionCallCentreBtn), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc func actionCallCentreBtn() {
+        let callCentreVC = CallCentreViewController()
+        self.navigationController?.pushViewController(callCentreVC, animated: true)
+    }
+    
     // MARK: - Footer content part
     
     private let requestView: UIView = {
@@ -172,6 +183,17 @@ final class SupportViewController: UIViewController {
         imageView.layer.masksToBounds = true
         return imageView
     }()
+    
+    private lazy var requestButton: UIButton = {
+        let button = UIButton()
+        button.addTarget(self, action: #selector(actionRequestBtn), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc func actionRequestBtn() {
+        let requestVC = RequestViewController()
+        self.navigationController?.pushViewController(requestVC, animated: true)
+    }
 
     // MARK: - Init viewDidLoad()
     
@@ -204,14 +226,16 @@ final class SupportViewController: UIViewController {
         self.secondBlockButton.addSubview(speedImage)
         
         self.view.addSubview(callCentreView)
-        self.callCentreView.addSubview(tarifNameLabel)
-        self.callCentreView.addSubview(operatorImage)
+        self.callCentreView.addSubview(callCentreButton)
+        self.callCentreButton.addSubview(tarifNameLabel)
+        self.callCentreButton.addSubview(operatorImage)
         
         self.view.addSubview(requestView)
-        self.requestView.addSubview(requestStackView)
+        self.requestView.addSubview(requestButton)
+        self.requestButton.addSubview(requestStackView)
         self.requestStackView.addArrangedSubview(requestLabel)
         self.requestStackView.addArrangedSubview(sendShowLabel)
-        self.requestView.addSubview(toolImage)
+        self.requestButton.addSubview(toolImage)
     }
     
     private func setConstraints() {
@@ -296,16 +320,24 @@ final class SupportViewController: UIViewController {
             make.height.equalTo(64)
         }
         
+        callCentreButton.snp.makeConstraints { make in
+            make.top.equalTo(self.callCentreView.snp.top)
+            make.leading.equalTo(self.callCentreView.snp.leading)
+            make.trailing.equalTo(self.callCentreView.snp.trailing)
+            make.bottom.equalTo(self.callCentreView.snp.bottom)
+            make.width.equalTo(self.callCentreView.snp.width)
+        }
+        
         tarifNameLabel.snp.makeConstraints { make in
-            make.top.equalTo(self.callCentreView.snp.top).offset(16)
-            make.leading.equalTo(self.callCentreView.snp.leading).offset(20)
-            make.bottom.equalTo(self.callCentreView.snp.bottom).offset(-24)
+            make.top.equalTo(self.callCentreButton.snp.top).offset(16)
+            make.leading.equalTo(self.callCentreButton.snp.leading).offset(20)
+            make.bottom.equalTo(self.callCentreButton.snp.bottom).offset(-24)
             make.height.equalTo(24)
         }
         
         operatorImage.snp.makeConstraints { make in
-            make.top.equalTo(self.callCentreView.snp.top).offset(16)
-            make.trailing.equalTo(self.callCentreView.snp.trailing).offset(-20)
+            make.top.equalTo(self.callCentreButton.snp.top).offset(16)
+            make.trailing.equalTo(self.callCentreButton.snp.trailing).offset(-20)
             make.size.equalTo(CGSize(width: 32, height: 32))
         }
         
@@ -318,17 +350,25 @@ final class SupportViewController: UIViewController {
             make.height.equalTo(76)
         }
         
+        requestButton.snp.makeConstraints { make in
+            make.top.equalTo(self.requestView.snp.top)
+            make.leading.equalTo(self.requestView.snp.leading)
+            make.trailing.equalTo(self.requestView.snp.trailing)
+            make.bottom.equalTo(self.requestView.snp.bottom)
+            make.width.equalTo(self.requestView.snp.width)
+        }
+        
         requestStackView.snp.makeConstraints { make in
-            make.top.equalTo(self.requestView.snp.top).offset(16)
-            make.leading.equalTo(self.requestView.snp.leading).offset(20)
-            make.bottom.equalTo(self.requestView.snp.bottom).offset(-16)
+            make.top.equalTo(self.requestButton.snp.top).offset(16)
+            make.leading.equalTo(self.requestButton.snp.leading).offset(20)
+            make.bottom.equalTo(self.requestButton.snp.bottom).offset(-16)
             make.height.equalTo(44)
         }
         
         toolImage.snp.makeConstraints { make in
-            make.top.equalTo(self.requestView.snp.top).offset(16)
+            make.top.equalTo(self.requestButton.snp.top).offset(16)
             make.leading.equalTo(self.requestStackView.snp.trailing).offset(43)
-            make.trailing.equalTo(self.requestView.snp.trailing).offset(-20)
+            make.trailing.equalTo(self.requestButton.snp.trailing).offset(-20)
             make.size.equalTo(CGSize(width: 32, height: 32))
         }
     }
@@ -341,6 +381,7 @@ final class ChatViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .systemBackground
+        self.navigationController?.navigationBar.topItem?.title = " "
         self.title = "Чат с оператором"
     }
 }
@@ -350,6 +391,27 @@ final class CheckSpeedViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .systemBackground
+        self.navigationController?.navigationBar.topItem?.title = " "
         self.title = "Проверить скорость"
+    }
+}
+
+final class CallCentreViewController: UIViewController {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.view.backgroundColor = .systemBackground
+        self.navigationController?.navigationBar.topItem?.title = " "
+        self.title = "Звонок в колл-центр"
+    }
+}
+
+final class RequestViewController: UIViewController {
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.view.backgroundColor = .systemBackground
+        self.navigationController?.navigationBar.topItem?.title = " "
+        self.title = "Мои заявки"
     }
 }
