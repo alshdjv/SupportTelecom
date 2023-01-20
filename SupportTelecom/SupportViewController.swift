@@ -21,7 +21,9 @@ final class SupportViewController: UIViewController {
         return label
     }()
     
-    /// MARK: - First Stack View
+    // MARK: - Header content part
+
+    /// MARK: - FirstStackView
     private let leftView: UIView = {
         let view = UIView()
         view.backgroundColor = .systemBackground
@@ -104,6 +106,29 @@ final class SupportViewController: UIViewController {
     @objc func actionRightBtn() {
         
     }
+    
+    /// MARK: - Middle content part
+    private var callCentreView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemBackground
+        view.layer.cornerRadius = 20
+        return view
+    }()
+    
+    private let tarifNameLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Звонок в колл-центр"
+        label.font = .systemFont(ofSize: 20, weight: .semibold)
+        return label
+    }()
+    
+    private let operatorImage: UIImageView = {
+        let image = UIImage(named: "call_centre")
+        let imageView = UIImageView(image: image?.withRenderingMode(.alwaysOriginal))
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.masksToBounds = true
+        return imageView
+    }()
 
     // MARK: - Init viewDidLoad()
     
@@ -134,6 +159,10 @@ final class SupportViewController: UIViewController {
         self.rightView.addSubview(secondBlockButton)
         self.secondBlockButton.addSubview(speedLabel)
         self.secondBlockButton.addSubview(speedImage)
+        
+        self.view.addSubview(callCentreView)
+        self.callCentreView.addSubview(tarifNameLabel)
+        self.callCentreView.addSubview(operatorImage)
     }
     
     private func setConstraints() {
@@ -143,7 +172,7 @@ final class SupportViewController: UIViewController {
             make.height.equalTo(40)
         }
         
-        // First StackView what holds two views
+        // HEADER PART - First StackView what holds two views
         viewStackView.snp.makeConstraints { make in
             make.top.equalTo(self.supportLabel.snp.bottom).offset(24)
             make.leading.trailing.equalToSuperview().inset(16)
@@ -209,6 +238,27 @@ final class SupportViewController: UIViewController {
             make.height.equalTo(72)
         }
         
+        
+        // MIDDLE PART: - Call Centre View
+        callCentreView.snp.makeConstraints { make in
+            make.top.equalTo(self.viewStackView.snp.bottom).offset(24)
+            make.leading.equalTo(self.viewStackView.snp.leading)
+            make.trailing.equalTo(self.viewStackView.snp.trailing)
+            make.height.equalTo(64)
+        }
+        
+        tarifNameLabel.snp.makeConstraints { make in
+            make.top.equalTo(self.callCentreView.snp.top).offset(16)
+            make.leading.equalTo(self.callCentreView.snp.leading).offset(20)
+            make.bottom.equalTo(self.callCentreView.snp.bottom).offset(-24)
+            make.height.equalTo(24)
+        }
+        
+        operatorImage.snp.makeConstraints { make in
+            make.top.equalTo(self.callCentreView.snp.top).offset(16)
+            make.trailing.equalTo(self.callCentreView.snp.trailing).offset(-20)
+            make.size.equalTo(CGSize(width: 32, height: 32))
+        }
     }
 }
 
