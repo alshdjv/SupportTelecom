@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		632DD8B5297E4DC700FB644D /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632DD8B4297E4DC700FB644D /* ChatView.swift */; };
+		632DD8B7297E62F200FB644D /* SpeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632DD8B6297E62F200FB644D /* SpeedView.swift */; };
+		632DD8B9297E652A00FB644D /* CallCentreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632DD8B8297E652A00FB644D /* CallCentreView.swift */; };
+		632DD8BB297E67F700FB644D /* RequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632DD8BA297E67F700FB644D /* RequestView.swift */; };
 		63CCC1FB297934C000610235 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CCC1FA297934C000610235 /* AppDelegate.swift */; };
 		63CCC1FD297934C000610235 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CCC1FC297934C000610235 /* SceneDelegate.swift */; };
 		63CCC1FF297934C000610235 /* SupportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63CCC1FE297934C000610235 /* SupportViewController.swift */; };
@@ -16,6 +20,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		632DD8B4297E4DC700FB644D /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		632DD8B6297E62F200FB644D /* SpeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeedView.swift; sourceTree = "<group>"; };
+		632DD8B8297E652A00FB644D /* CallCentreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCentreView.swift; sourceTree = "<group>"; };
+		632DD8BA297E67F700FB644D /* RequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestView.swift; sourceTree = "<group>"; };
 		63CCC1F7297934C000610235 /* SupportTelecom.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SupportTelecom.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63CCC1FA297934C000610235 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		63CCC1FC297934C000610235 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -37,6 +45,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		632DD8B2297E4D5100FB644D /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				63CCC1FE297934C000610235 /* SupportViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		632DD8B3297E4D8F00FB644D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				632DD8B4297E4DC700FB644D /* ChatView.swift */,
+				632DD8B6297E62F200FB644D /* SpeedView.swift */,
+				632DD8B8297E652A00FB644D /* CallCentreView.swift */,
+				632DD8BA297E67F700FB644D /* RequestView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		63CCC1EE297934C000610235 = {
 			isa = PBXGroup;
 			children = (
@@ -58,7 +85,8 @@
 			children = (
 				63CCC1FA297934C000610235 /* AppDelegate.swift */,
 				63CCC1FC297934C000610235 /* SceneDelegate.swift */,
-				63CCC1FE297934C000610235 /* SupportViewController.swift */,
+				632DD8B3297E4D8F00FB644D /* View */,
+				632DD8B2297E4D5100FB644D /* Controller */,
 				63CCC203297934C100610235 /* Assets.xcassets */,
 				63CCC205297934C100610235 /* LaunchScreen.storyboard */,
 				63CCC208297934C100610235 /* Info.plist */,
@@ -142,9 +170,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				632DD8BB297E67F700FB644D /* RequestView.swift in Sources */,
+				632DD8B5297E4DC700FB644D /* ChatView.swift in Sources */,
 				63CCC1FF297934C000610235 /* SupportViewController.swift in Sources */,
 				63CCC1FB297934C000610235 /* AppDelegate.swift in Sources */,
+				632DD8B9297E652A00FB644D /* CallCentreView.swift in Sources */,
 				63CCC1FD297934C000610235 /* SceneDelegate.swift in Sources */,
+				632DD8B7297E62F200FB644D /* SpeedView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
