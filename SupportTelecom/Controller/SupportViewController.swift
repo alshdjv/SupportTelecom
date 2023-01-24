@@ -10,6 +10,8 @@ struct Colors {
 
 final class ChatView: UIView {
     
+    var labelCount: Int = 0
+    
     private let chatLabel: UILabel = {
         let label = UILabel()
         label.text = "Чат с оператором"
@@ -42,16 +44,10 @@ final class ChatView: UIView {
         return label
     }()
     
-    private lazy var chatButton: UIButton = {
+    private let chatButton: UIButton = {
         let button = UIButton()
-//        button.addTarget(self, action: #selector(actionLeftBtn), for: .touchUpInside)
         return button
     }()
-    
-//    @objc func actionLeftBtn() {
-//        let chatVC = ChatViewController()
-//        self.navigationController?.pushViewController(chatVC, animated: true)
-//    }
         
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -110,6 +106,30 @@ final class ChatView: UIView {
         }
     }
     
+    // MARK: - Functions
+    
+    public func configure(number: Int) {
+        labelCount = number
+        
+        for _ in 0..<labelCount {
+            let view = dotView
+            let label = labelInsideDotView
+            
+            /// If value of labelCount is equal to 0
+            if labelCount == 0 {
+                /// The values of view and label will be hidden
+                view.isHidden = true
+                label.isHidden = true
+            } else {
+                /// else, the values will be false
+                view.isHidden = false
+                label.isHidden = false
+            }
+            label.text = String(labelCount)
+            view.addSubview(label)
+        }
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -135,16 +155,10 @@ final class SpeedView: UIView {
         return imageView
     }()
     
-    private lazy var speedButton: UIButton = {
+    private let speedButton: UIButton = {
         let button = UIButton()
-//        button.addTarget(self, action: #selector(speedButton()), for: .touchUpInside)
         return button
     }()
-    
-//    @objc func speedButton() {
-//        let checkSpeedVC = CheckSpeedViewController()
-//        self.navigationController?.pushViewController(checkSpeedVC, animated: true)
-//    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -215,16 +229,10 @@ final class CallCentreView: UIView {
         return imageView
     }()
     
-    private lazy var callCentreButton: UIButton = {
+    private let callCentreButton: UIButton = {
         let button = UIButton()
-//        button.addTarget(self, action: #selector(actionCallCentreBtn), for: .touchUpInside)
         return button
     }()
-    
-//    @objc func actionCallCentreBtn() {
-//        let callCentreVC = CallCentreViewController()
-//        self.navigationController?.pushViewController(callCentreVC, animated: true)
-//    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -302,16 +310,10 @@ final class RequestView: UIView {
         return imageView
     }()
     
-    private lazy var requestButton: UIButton = {
+    private let requestButton: UIButton = {
         let button = UIButton()
-//        button.addTarget(self, action: #selector(actionRequestBtn), for: .touchUpInside)
         return button
     }()
-    
-//    @objc func actionRequestBtn() {
-//        let requestVC = RequestViewController()
-//        self.navigationController?.pushViewController(requestVC, animated: true)
-//    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -378,8 +380,6 @@ final class SupportViewController: UIViewController {
     private let callCentreView = CallCentreView()
     private let requestView = RequestView()
     
-    var labelCount: Int = 0
-    
     private let supportLabel: UILabel = {
         let label = UILabel()
         label.text = "Поддержка"
@@ -407,8 +407,12 @@ final class SupportViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .secondarySystemBackground
+        /// Calling configure method from Chat View to set value for dotView
+        /// If value is equal to 0
+        /// dotView dissapears
+        /// Else, It will color the point red and set the value to the dotView
+        self.chatView.configure(number: 25)
         
-        self.configure(number: 10)
         self.setupUI()
     }
     
@@ -477,27 +481,6 @@ final class SupportViewController: UIViewController {
             make.leading.equalTo(self.mainStackView.snp.leading)
             make.trailing.equalTo(self.mainStackView.snp.trailing)
             make.height.equalTo(76)
-        }
-    }
-    
-    // MARK: - Functions
-    
-    public func configure(number: Int) {
-        labelCount = number
-
-        for _ in 0..<labelCount {
-            let view = chatView
-            let dot = chatView.dotView
-            let label = view.labelInsideDotView
-            if labelCount == 0 {
-                dot.isHidden = true
-                label.isHidden = true
-            } else {
-                dot.isHidden = false
-                label.isHidden = false
-            }
-            label.text = String(labelCount)
-            dot.addSubview(label)
         }
     }
 }
