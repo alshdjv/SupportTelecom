@@ -108,25 +108,12 @@ final class ChatView: UIView {
     
     // MARK: - Functions
     
-    public func configure(number: Int) {
-        labelCount = number
-        
-        for _ in 0..<labelCount {
-            let view = dotView
-            let label = labelInsideDotView
-            
-            /// If value of labelCount is equal to 0
-            if labelCount == 0 {
-                /// The values of view and label will be hidden
-                view.isHidden = true
-                label.isHidden = true
-            } else {
-                /// else, the values will be false
-                view.isHidden = false
-                label.isHidden = false
-            }
-            label.text = String(labelCount)
-            view.addSubview(label)
+    public func setBadge(number: Int) {
+        labelInsideDotView.text = "\(number)"
+        if number < 1 {
+            dotView.isHidden = true
+        } else {
+            dotView.isHidden = false
         }
     }
     
@@ -411,7 +398,7 @@ final class SupportViewController: UIViewController {
         /// If value is equal to 0
         /// dotView dissapears
         /// Else, It will color the point red and set the value to the dotView
-        self.chatView.configure(number: 25)
+        self.chatView.setBadge(number: 25)
         
         self.setupUI()
     }
